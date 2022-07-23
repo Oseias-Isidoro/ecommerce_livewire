@@ -14,7 +14,7 @@ class ShowShops extends Component
 
     public function render()
     {
-        $shops = Shop::paginate(5);
+        $shops = Shop::latest()->paginate(5);
         return view('livewire.shops.show-shops', compact(['shops']));
     }
 }
