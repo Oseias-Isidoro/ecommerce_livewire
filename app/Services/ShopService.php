@@ -3,13 +3,14 @@
 namespace App\Services;
 
 use App\Models\Shop;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class ShopService
 {
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function create(array $shop_data): Shop
     {
@@ -22,20 +23,29 @@ class ShopService
         ]);
 
         if (!$shop->save())
-            throw new \Exception('Error creating shop', 500);
+            throw new Exception('Error creating shop', 500);
 
         return $shop;
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function update(Shop $shop, array $shop_data): Shop
     {
         if (!$shop->update($shop_data))
-            throw new \Exception('Error updating shop', 500);
+            throw new Exception('Error updating shop', 500);
 
         return $shop;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function destroy(Shop $shop): void
+    {
+        if (!$shop->delete())
+            throw new Exception('Error deleting shop', 500);
     }
 
     public function randomHash($field): string
