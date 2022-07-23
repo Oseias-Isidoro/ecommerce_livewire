@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Shop;
 use App\Http\Requests\StoreShopRequest;
 use App\Http\Requests\UpdateShopRequest;
+use App\Services\ShopService;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 
 class ShopController extends Controller
@@ -46,7 +49,7 @@ class ShopController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Shop  $shop
+     * @param Shop $shop
      * @return Response
      */
     public function show(Shop $shop)
@@ -57,7 +60,7 @@ class ShopController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Shop  $shop
+     * @param Shop $shop
      */
     public function edit(Shop $shop)
     {
@@ -68,7 +71,7 @@ class ShopController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateShopRequest  $request
-     * @param  \App\Models\Shop  $shop
+     * @param Shop $shop
      * @return Response
      */
     public function update(UpdateShopRequest $request, Shop $shop)
@@ -79,11 +82,14 @@ class ShopController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Shop  $shop
-     * @return Response
+     * @param Shop $shop
+     * @return RedirectResponse
+     * @throws Exception
      */
-    public function destroy(Shop $shop)
+    public function destroy(Shop $shop): RedirectResponse
     {
-        //
+        (new ShopService())->destroy($shop);
+
+        return redirect()->route('shops.index')->with('success', __('successfully deleted'));
     }
 }
