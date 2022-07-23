@@ -21,7 +21,10 @@ class CreateShopForm extends Component
     public function submit()
     {
         (new ShopService())->create($this->validate());
-        $this->redirect(route('shops.index'));
+
+        return redirect()
+            ->route('shops.index')
+            ->with('success', __('successfully created'));
     }
 
     public function render()
