@@ -12,7 +12,12 @@
 @isset($shop)
     <div class="mb-3">
         <label for="status" class="form-label">status</label>
-        <input id="status" type="text" class="form-control" wire:model="status">
+        <select id="status"  class="form-select" aria-label="Default select example" wire:model="status">
+            @foreach(\App\Models\Shop::$STATUS_VALUES as $value)
+                <option value="{{$value}}">{{$value}}</option>
+            @endforeach
+        </select>
+
         @error('status') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 @endisset
