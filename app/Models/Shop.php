@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static create(array $shop_data)
  * @method static where($field, string $hash)
  * @method static find(int $id)
+ * @property mixed $status
  */
 class Shop extends Model
 {
@@ -34,6 +35,11 @@ class Shop extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function isActive(): bool
+    {
+        return $this->status === self::$STATUS_ACTIVE;
     }
 
     /**
